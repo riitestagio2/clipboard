@@ -4,13 +4,13 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeor
 export class Clipboard {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id?: number;
 
     @Column()
     code: string;
 
     @CreateDateColumn({type: 'timestamp'})
-    createdAt: Date;
+    createdAt?: Date;
 
     @Column({type: 'boolean'})
     oneVisualization: boolean;

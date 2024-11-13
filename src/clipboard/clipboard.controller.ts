@@ -1,6 +1,8 @@
-import { Controller, Get, Inject, Post, Res } from '@nestjs/common';
+import { Controller, Get, Inject, Post, Res, Param, Body, HttpStatus } from '@nestjs/common';
 import { ClipboardService } from './clipboard.service';
 import { Response } from 'express';
+import { CreateClipboardDTO, FindClipboardDTO, toClipboardDomain } from './clipboard.resources'
+import { Clipboard } from './clipboard.entity';
 
 @Controller('clipboard')
 export class ClipboardController {
@@ -9,14 +11,31 @@ export class ClipboardController {
     ){}
 
     @Get()
-    findAll(@Res() res: Response) {
-        //const response = this.service.findAll();
-        return res.status(200).send('funcionou!');
+    async findAll(@Res() res: Response) {
+        const queryResponse = await this.service.findAll();
+        return res.status(HttpStatus.OK).send(queryResponse);
     }
 
-    // @Get('/:code')
-    // findByCode = (req, res) => {}
+    @Get(':code')
+    async findByCode(@Param('code') code: string, @Res() res: Response) {
+        if(!code)
+            return res.status(HttpStatus.BAD_REQUEST).send({ "message": "Envie o parametro 'code'"})
+        
+        const queryResponse = await this.service.findOne(code);
 
-    // @Post('');
-    // create = (req, res) => {}
+        if(queryResponse)
+            return res.status(HttpStatus.OK).send(queryResponse);
+        else
+            return res.status(HttpStatus.NOT_FOUND).send();
+    }
+
+    // @Post()
+    // async create(@Body() body: CreateClipboardDTO, @Res() res: Response) {
+
+    //     const clipboardDomain: Clipboard = toClipboardDomain(body);
+    //     const clipboardCreated: Clipboard = await this.service.create(clipboardDomain);
+    //     if(!clipboardCreated)
+    //         return res.status(HttpStatus.BAD_REQUEST).send(clipboardCreated)
+    //     return res.status(HttpStatus.CREATED).send(clipboardCreated)
+    // }
 }
