@@ -7,7 +7,10 @@ export class Clipboard {
     id?: number;
 
     @Column()
-    code: string;
+    code?: string;
+
+    @Column()
+    content: string;
 
     @CreateDateColumn({type: 'timestamp'})
     createdAt?: Date;

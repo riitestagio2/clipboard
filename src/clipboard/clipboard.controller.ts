@@ -13,6 +13,8 @@ export class ClipboardController {
     @Get()
     async findAll(@Res() res: Response) {
         const queryResponse = await this.service.findAll();
+        if(!queryResponse.length)
+            return res.status(HttpStatus.NOT_FOUND).send();
         return res.status(HttpStatus.OK).send(queryResponse);
     }
 
@@ -29,13 +31,13 @@ export class ClipboardController {
             return res.status(HttpStatus.NOT_FOUND).send();
     }
 
-    // @Post()
-    // async create(@Body() body: CreateClipboardDTO, @Res() res: Response) {
+    @Post()
+    async create(@Body() body: CreateClipboardDTO, @Res() res: Response) {
 
-    //     const clipboardDomain: Clipboard = toClipboardDomain(body);
-    //     const clipboardCreated: Clipboard = await this.service.create(clipboardDomain);
-    //     if(!clipboardCreated)
-    //         return res.status(HttpStatus.BAD_REQUEST).send(clipboardCreated)
-    //     return res.status(HttpStatus.CREATED).send(clipboardCreated)
-    // }
+        const clipboardDomain: Clipboard = toClipboardDomain(body);
+        const clipboardCreated: Clipboard = await this.service.create(clipboardDomain);
+        if(!clipboardCreated)
+            return res.status(HttpStatus.BAD_REQUEST).send(clipboardCreated)
+        return res.status(HttpStatus.CREATED).send(clipboardCreated)
+    }
 }

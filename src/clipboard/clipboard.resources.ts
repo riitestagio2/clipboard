@@ -5,9 +5,9 @@ export class FindClipboardDTO {
     oneVisualization: boolean
 }
 
-export function toClipboardDomain(resource: FindClipboardDTO): Clipboard {
+export function toClipboardDomain(resource: CreateClipboardDTO): Clipboard {
     return {
-        code: resource.code,
+        content: resource.content,
         oneVisualization: resource.oneVisualization
     }
 }
