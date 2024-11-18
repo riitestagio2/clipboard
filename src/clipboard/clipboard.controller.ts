@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Post, Res, Param, Body, HttpStatus } from '@nestjs/common';
 import { ClipboardService } from './clipboard.service';
 import { Response } from 'express';
-import { CreateClipboardDTO, FindClipboardDTO, toClipboardDomain } from './clipboard.resources'
+import { CreateClipboardDTO, toClipboardDomain } from './clipboard.resources'
 import { Clipboard } from './clipboard.entity';
 
 @Controller('clipboard')
